@@ -10,7 +10,9 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
+
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 
 public class DriverFactory {
@@ -18,35 +20,38 @@ public class DriverFactory {
     WebDriver driver;
 
     public WebDriver initializeDriver() {
-        String browser= ConfigUtils.getInstance().getRunner();
-        switch (browser)
-        {
-            case "CHROME":
-            {
+        String browser = ConfigUtils.getInstance().getRunner();
+        switch (browser) {
+            case "CHROME": {
                 WebDriverManager.chromedriver().setup();
+                WebDriverManager.chromedriver().clearDriverCache().setup();
 
-                ChromeOptions options=new ChromeOptions();
-                options.addArguments("--remote-allow-origins=*");
-                driver=new ChromeDriver(options);
+                ChromeOptions options = new ChromeOptions();
+
+                //  options.addArguments("--remote-allow-origins=*");
+                driver = new ChromeDriver(options);
+
+
                 break;
             }
-            case "FIREFOX":
-            {
+            case "FIREFOX": {
                 WebDriverManager.firefoxdriver().setup();
-                driver=new FirefoxDriver();
+                driver = new FirefoxDriver();
+
+
                 break;
             }
-            case "EDGE":
-            {
+            case "EDGE": {
                 WebDriverManager.edgedriver().setup();
-                EdgeOptions edgeOptions=new EdgeOptions();
+                EdgeOptions edgeOptions = new EdgeOptions();
                 edgeOptions.addArguments("-inprivate");
-                driver=new EdgeDriver(edgeOptions);
+                driver = new EdgeDriver(edgeOptions);
+
+
                 break;
             }
-            case "SAFARI":
-            {
-                driver=new SafariDriver();
+            case "SAFARI": {
+                driver = new SafariDriver();
                 break;
             }
             default:
@@ -54,7 +59,8 @@ public class DriverFactory {
         }
 
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(12));
+
         return driver;
     }
 }

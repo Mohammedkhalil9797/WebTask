@@ -25,7 +25,7 @@ public class Screenshots extends BaseTest {
     }
 
     public static Media screenShots() throws IOException {
-        return  MediaEntityBuilder.createScreenCaptureFromBase64String(getScreenShotAsBase64()).build();
+        return MediaEntityBuilder.createScreenCaptureFromBase64String(getScreenShotAsBase64()).build();
     }
 
 }

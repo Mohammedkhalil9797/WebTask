@@ -6,14 +6,14 @@ import java.util.Properties;
 public class ConfigUtils {
     private Properties properties;
     public static ConfigUtils configUtils;
-    public static ConfigUtils getInstance()
-    {
-        if(configUtils==null)
-        {
-            configUtils=new ConfigUtils();
+
+    public static ConfigUtils getInstance() {
+        if (configUtils == null) {
+            configUtils = new ConfigUtils();
         }
         return configUtils;
     }
+
     /*
     private ConfigUtils()
     {
@@ -31,48 +31,58 @@ public class ConfigUtils {
         }
 
     }*/
-    public String getBaseUrl()
-    {
-        String prop=properties.getProperty("baseUrl");
-        if(prop!=null)
-        return prop;
+    public String getBaseUrl() {
+        String prop = properties.getProperty("baseUrl");
+        if (prop != null)
+            return prop;
         throw new RuntimeException("could not find url in file");
     }
-    public String getEmail()
-    {
-        String prop=properties.getProperty("email");
-        if(prop!=null)
+    public String getnavigate() {
+        String prop = properties.getProperty("navigate");
+        if (prop != null)
+            return prop;
+        throw new RuntimeException("could not find url in file");
+    }
+
+    public String getEmail() {
+        String prop = properties.getProperty("email");
+        if (prop != null)
             return prop;
         throw new RuntimeException("could not find email in file");
     }
-    public String getPass()
-    {
-        String prop=properties.getProperty("pass");
-        if(prop!=null)
+
+    public String getPass() {
+        String prop = properties.getProperty("pass");
+        if (prop != null)
             return prop;
         throw new RuntimeException("could not find pass in file");
     }
-    public String getRunner()
-    {
-        properties=loadProperties("src/test/java/com/qacart/todo/config/productions.properties");
-        String prop=properties.getProperty("browser");
-        if(prop!=null)
+
+    public String getRunner() {
+        properties = loadProperties("src/test/java/com/qacart/todo/config/productions.properties");
+        String prop = properties.getProperty("browser");
+        if (prop != null)
             return prop;
         throw new RuntimeException("could not find pass in file");
     }
-    public static Properties loadProperties(String filePath)
-    {
-        File file=new File(filePath);
+
+    public String getRetryCount() {
+        String prop = properties.getProperty("maxRetryCount");
+        if (prop != null)
+            return prop;
+        throw new RuntimeException("could not find RetryCount in file");
+    }
+
+    public static Properties loadProperties(String filePath) {
+        File file = new File(filePath);
 
         try {
-            InputStream inputStream=new FileInputStream(file);
-            Properties properties=new Properties();
+            InputStream inputStream = new FileInputStream(file);
+            Properties properties = new Properties();
             properties.load(inputStream);
             inputStream.close();
             return properties;
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             throw new RuntimeException("File is Not Found");
         } catch (IOException e) {
             throw new RuntimeException("Error while loading properties");

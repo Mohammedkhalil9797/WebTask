@@ -1,6 +1,5 @@
 package com.qacart.todo.base;
 
-import com.aventstack.extentreports.ExtentTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 

@@ -1,26 +1,26 @@
 package com.qacart.todo.testcases;
+
 import com.qacart.todo.base.BaseTest;
 
-import com.qacart.todo.pages.LoginPage;
+import com.qacart.todo.enums.UserType;
+import com.qacart.todo.pages.*;
+
+import com.qacart.todo.utils.RetryAnalyzer;
 
 import org.testng.annotations.Test;
 
-import java.awt.*;
-import java.io.IOException;
-
 public class LoginTest extends BaseTest {
 
-    @Test
+
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void ShouldBeAbleToLoginWithEmailAndPassword() throws Exception {
 
         LoginPage loginPage = new LoginPage();
-        loginPage.login();
+        HomePage homePage = new HomePage();
+        loginPage.login(UserType.CRMUserUAT);
+        homePage.checkFromSuccessLogin();
     }
 
-    @Test
-    public void ShouldBeAbleToLoginWithEmailAndPassword2() throws IOException, InterruptedException, AWTException {
-        LoginPage loginPage = new LoginPage();
-        driver.navigate().to("https://imgbb.com/upload");
-        loginPage.up();
-    }
+
+
 }
