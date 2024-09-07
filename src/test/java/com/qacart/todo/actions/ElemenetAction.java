@@ -5,6 +5,7 @@ import com.qacart.todo.utils.Screenshots;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -23,7 +24,6 @@ public class ElemenetAction extends BaseTest {
     }
 
     public static WebDriverWait wait;
-    public static  ApiRequest apiRequest = new ApiRequest();
     public static void sendKeys(By locator, String text) throws Exception {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         WebElement wElement = element(locator);
@@ -38,14 +38,21 @@ public class ElemenetAction extends BaseTest {
 
     }
 
-    public static void isDisplayed(By locator) throws IOException {
+    public static boolean isDisplayed(By locator) throws IOException {
 
-
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
         element(locator).isDisplayed();
-        logger.info("يجب نجاح عملية تقديم الطلب", Screenshots.screenShots());
+        jse.executeScript("arguments[0].style.border='3px solid green'", element(locator));
+        logger.info(element(locator).getText()+" Exist", Screenshots.screenShots());
 
+        return true;
     }
+    public static boolean isDisplayedBoolean(By locator) throws IOException {
 
+
+        return element(locator).isDisplayed();
+    }
+/*
     public static boolean waitVisibility(By by, long time) {
         boolean isElementPresent = false;
 
@@ -58,7 +65,7 @@ public class ElemenetAction extends BaseTest {
 
         return isElementPresent;
     }
-
+*/
 
     public static void clickAction(By by) {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
@@ -115,11 +122,7 @@ public class ElemenetAction extends BaseTest {
       return  element(by).getText();
 
     }
-    public static void waitUntilApi(String url)
-    {
 
-            ApiRequest.waitForApiSuccess(url);
-    }
 /*
     public static void uploadFiles(By by,String location) throws InterruptedException, AWTException {
         Robot robot=new Robot();

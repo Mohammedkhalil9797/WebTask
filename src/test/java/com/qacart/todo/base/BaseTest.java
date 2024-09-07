@@ -18,6 +18,7 @@ import org.testng.annotations.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 
 
 public class BaseTest implements ITestListener {
@@ -28,7 +29,7 @@ public class BaseTest implements ITestListener {
     public static Faker faker = new Faker();
 
     @BeforeMethod
-    public void setup(Method method) {
+    public void setup(Method method) throws MalformedURLException {
 
         logger = extent.createTest(method.getName());
         driver = new DriverFactory().initializeDriver();
@@ -36,7 +37,7 @@ public class BaseTest implements ITestListener {
 
     @BeforeTest
     public void setupTest() {
-        sparkReporter = new ExtentSparkReporter(System.getProperty("user.dir") + File.separator + "reportFolder" + File.separator + "SDETADDAExtentReport1.html");
+        sparkReporter = new ExtentSparkReporter(System.getProperty("user.dir") + File.separator + "reportFolder" + File.separator + "MohammedTask.html");
         extent = new ExtentReports();
         extent.attachReporter(sparkReporter);
         sparkReporter.config().setTheme(Theme.DARK);
@@ -59,7 +60,7 @@ public class BaseTest implements ITestListener {
             logger.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " Test Case PASS", ExtentColor.GREEN));
 
         }
-       // driver.quit();
+       driver.quit();
     }
 
     @AfterTest
@@ -71,6 +72,6 @@ public class BaseTest implements ITestListener {
 
 @AfterClass
     public void afterClass() {
-       // driver.quit();
+       driver.quit();
 }
 }

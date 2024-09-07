@@ -1,13 +1,11 @@
 package com.qacart.todo.pages;
 import com.qacart.todo.actions.ElemenetAction;
 import com.qacart.todo.base.BaseTest;
+import com.qacart.todo.enums.UserType;
+import com.qacart.todo.utils.ConfigUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-
-import java.awt.*;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
 
 
 public class LoginPage extends BaseTest {
@@ -16,28 +14,31 @@ public class LoginPage extends BaseTest {
         PageFactory.initElements(driver, this);
     }
 
-    private final By email = By.xpath("//input[@id='email']");
 
-    private final By password = By.xpath("//input[@id='password']");
 
-    private final By login2 = By.xpath("//span[@class='MuiButton-label']");
-    private final By test=By.xpath("//h3[.='Social Media']");
-    private final By add = By.cssSelector("[data-testid='add']");
-    private final By add2 = By.cssSelector(".MuiInputBase-input");
-    private final By tt=By.xpath("//span[@class='icon icon-cloud-arrow-up cursor-pointer']");
+    private final By username = By.xpath("//input[@data-test='username']");
+    private final By password = By.xpath("//input[@data-test='password']");
 
-    public void login() throws Exception {
+    private final By loginButton = By.xpath("//input[@data-test='login-button']");
+    private final By error = By.xpath("//h3[@data-test='error']");
+    public void url() throws Exception {
 
-        ElemenetAction.navigate("https://qacart-todo.herokuapp.com");
-        ElemenetAction.sendKeys(email, "test97@gmail.com");
-        ElemenetAction.sendKeys(password, "Test123@");
-        ElemenetAction.clickAction(login2);
-        ElemenetAction.clickAction(add);
-        ElemenetAction.sendKeys(add2,"hi");
+        ElemenetAction.navigate(ConfigUtils.getInstance().getBaseUrl());
+        Assert.assertEquals(ElemenetAction.getUrl(), "https://www.saucedemo.com/");
 
     }
+    public void sendInvalidUsernameAndPassword(String userName, String Password) throws Exception {
 
-    public void up() throws AWTException, InterruptedException {
-        ElemenetAction.uploadFiles(tt,"C:\\Users\\MohammadKhalil\\OneDrive - Quality Professionals\\Desktop\\EssCase.png");
+        ElemenetAction.sendKeys(username,userName);
+        ElemenetAction.sendKeys(password,Password);
+        ElemenetAction.clickAction(loginButton);
+        Assert.assertEquals(ElemenetAction.getText(error),"Epic sadface: Username and password do not match any user in this service");
+    }
+    public void validLogin(UserType userType) throws Exception {
+
+        ElemenetAction.sendKeys(username,userType.userName);
+        ElemenetAction.sendKeys(password,userType.password);
+        ElemenetAction.clickAction(loginButton);
+        Assert.assertEquals(ElemenetAction.getUrl(),"https://www.saucedemo.com/inventory.html");
     }
 }

@@ -20,8 +20,10 @@ public class Screenshots extends BaseTest {
         File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         String path = System.getProperty("user.dir") + "/Screenshots/image.png";
         FileUtils.copyFile(source, new File(path));
-        byte[] imageBytes = IOUtils.toByteArray(new FileInputStream(path));
-        return Base64.getEncoder().encodeToString(imageBytes);
+        try (FileInputStream fileInputStream = new FileInputStream(path)) {
+            byte[] imageBytes = IOUtils.toByteArray(fileInputStream);
+            return Base64.getEncoder().encodeToString(imageBytes);
+        }
     }
 
     public static Media screenShots() throws IOException {

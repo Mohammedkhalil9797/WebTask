@@ -2,6 +2,7 @@ package com.qacart.todo.factory;
 
 
 import com.qacart.todo.utils.ConfigUtils;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,17 +10,20 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
 import org.openqa.selenium.safari.SafariDriver;
 
+import java.net.MalformedURLException;
+
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
+
 
 
 public class DriverFactory {
 
     WebDriver driver;
 
-    public WebDriver initializeDriver() {
+    public WebDriver initializeDriver() throws MalformedURLException {
         String browser = ConfigUtils.getInstance().getRunner();
         switch (browser) {
             case "CHROME": {
@@ -50,10 +54,12 @@ public class DriverFactory {
 
                 break;
             }
-            case "SAFARI": {
+            case "SAFARI":
+            {
                 driver = new SafariDriver();
                 break;
             }
+
             default:
                 throw new RuntimeException("this browser not supported");
         }

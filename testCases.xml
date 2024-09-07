@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" name="Alwasleh">
+    <test verbose="2" name="Task">
         <classes>
             <class name="com.qacart.todo.testcases.LoginTest"/>
-            <class name="com.qacart.todo.testcases.AddServiceToNewCustomerTest"/>
+            <class name="com.qacart.todo.testcases.ApiTest"/>
 
         </classes>
     </test></suite>
